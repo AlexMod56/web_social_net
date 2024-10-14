@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ chat.name }}{% endblock %}
+
+{% block content %}
+<div class="chat-detail-container">
+    <h2>{{ chat.name }}</h2>
+    <div class="messages mb-4">
+        {% for message in messages %}
+            <div class="message mb-2 p-2 border rounded">
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">
+                        {% if message.is_anonymous %}
+                            Anonymous
+                        {% else %}
+                            {{ message.author.username }}
+                        {% endif %}
+                    </span>
+                    <small class="text-muted">{{ message.timestamp|date:"Y-m-d H:i" }}</small>
+                </div>
+                <p>{{ message.content }}</p>
+            </div>
+        {% empty %}
+            <p>No messages yet. Start the conversation!</p>
+        {% endfor %}
+    </div>
+
+    <div class="message-form">
+        <h4>Send a Message</h4>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

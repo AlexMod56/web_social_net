@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Chats{% endblock %}
+
+{% block content %}
+<div class="chat-home-container">
+    <h1>Your Chats</h1>
+    <a href="{% url 'chat-create' %}" class="btn btn-primary">Create New Chat</a>
+    <ul class="chat-list">
+        {% for chat in chats %}
+            <li>
+                <a href="{% url 'chat-detail' chat.pk %}">{{ chat.name }}</a>
+            </li>
+        {% empty %}
+            <li>No chats available. Create one!</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

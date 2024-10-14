@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4">Welcome to AlexMod56 Social Network!</h1>
+    <p class="lead">Connect with friends, share moments, and chat instantly.</p>
+    <div class="mt-4">
+        <a href="{% url 'register' %}" class="btn btn-primary btn-lg me-2">Register</a>
+        <a href="{% url 'login' %}" class="btn btn-secondary btn-lg">Login</a>
+    </div>
+</div>
+{% endblock %}

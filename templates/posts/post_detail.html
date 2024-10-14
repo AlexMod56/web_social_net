@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h3 class="card-title">{{ post.title }}</h3>
+        <p class="card-text">{{ post.content }}</p>
+        <p class="card-text"><small class="text-muted">By {{ post.author.username }} on {{ post.created_at|date:"Y-m-d H:i" }}</small></p>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post Image" class="img-fluid">
+        {% endif %}
+        <div>
+            <form method="POST" action="{% url 'like-post' post.pk %}">
+               {% csrf_token %}
+                {% if user in post.liked_by.all %}
+                    <button type="submit" class="btn btn-danger">
+                        ❤️ Unlike ({{ post.total_likes }})
+                    </button>
+                {% else %}
+                    <button type="submit" class="btn btn-outline-danger">
+                        ❤️ Like ({{ post.total_likes }})
+                    </button>
+               {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="comments-section">
+    <h4>Comments</h4>
+    {% if comments %}
+        <ul class="list-group mb-4">
+            {% for comment in comments %}
+                <li class="list-group-item">
+                    <strong>{{ comment.author.username }}</strong> on {{ comment.created_at|date:"Y-m-d H:i" }}:
+                    <p>{{ comment.content }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comments yet. Be the first to comment!</p>
+    {% endif %}
+
+    <h5>Add a Comment</h5>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Add Comment</button>
+    </form>
+    <hr>
+    <a href="{% url 'post-list' %}">Back to Posts</a>
+</div>
+{% endblock %}

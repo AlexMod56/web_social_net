@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="text-center">
+    <h2>Welcome, {{ user.username }}!</h2>
+    <p class="lead">Navigate through your social network.</p>
+    <div class="mt-4">
+        <a href="{% url 'chat-home' %}" class="btn btn-primary btn-lg me-3">Chats</a>
+        <a href="{% url 'post-list' %}" class="btn btn-success btn-lg">Posts</a>
+    </div>
+</div>
+{% endblock %}
